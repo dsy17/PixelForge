@@ -1,7 +1,7 @@
 import argparse
 from main.image_io import load_image, save_image
 from main.pipeline import Pipeline
-from effects.quantise import image_quantise
+from effects.quantize import image_quantise
 from effects.dither import image_dither
 from effects.ascii_art import image_ascii
 
