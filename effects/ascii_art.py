@@ -1,8 +1,10 @@
 from PIL import Image, ImageOps
-from main.pipeline import image
+#from main.pipeline import image
 
 new_width = 50
-ascii_char = ["@", "!", "$", "%", "^", "&", "*", "~", ",", "`", "\"", "=", ">", ".", " "]
+
+ascii_char = set(line.strip() for line in open('ascii_char.txt'))
+
 
 ascii_char_alt = ["@", "!", "$", "%", "^", "&", "*", "~", ",", "`", "\"", "=", ">", "{", "}", "[", "]", "?", "±", "§",
                   "+", "#", "|", ":", ".", " "]
