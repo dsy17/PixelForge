@@ -1,42 +1,41 @@
 from PIL import Image, ImageOps
-from main.paths import RESOURCES
+from main.pipeline import test_img
 
-new_width = 50
+WIDTH = 50
+IMAGE = test_img
+CHAR = {
+    "classic": "'@!$%^&*~,/>={}[]?+#|:. ",
+    "detailed": "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ",
+}
+ascii_char = CHAR["classic"]
 
-ascii_char = set(line.strip() for line in open(RESOURCES / 'ascii_char.txt'))
-print(ascii_char)
 
-
-ascii_char_alt = ["@", "!", "$", "%", "^", "&", "*", "~", ",", "`", "\"", "=", ">", "{", "}", "[", "]", "?", "±", "§",
-                  "+", "#", "|", ":", ".", " "]
-
-
-def process_image(image):
-    image_width, image_height = image.size
-    ratio = image_height / image_width
-    new_height = int(ratio * new_width)
-    new_image = image.resize((new_width, new_height))
-
-    new_image = ImageOps.grayscale(new_image)
+def resize_image(img):
+    new_height = int((img.size[0] / img.size[1]) * WIDTH)
+    new_image = img.resize((WIDTH, new_height))
 
     return new_image
 
 
-def ascii_generator():
-    new_image = process_image(pre_image)
-    new_image.save("newimage.png")
-    get_pixels = new_image.getdata()
+def grayscale_img(img):
+    return ImageOps.grayscale(img)
+
+
+def ascii_generator(img):
+    resize_img = resize_image(img)
+    gs_img = grayscale_img(resize_img)
+    get_pixels = gs_img.get_flattened_data()
 
     char_string = ""
     for a in get_pixels:
-        char_string += "".join(ascii_char[a//18])
+        char_string += "".join(ascii_char[a // 18])
         char_string += " "
 
     return char_string
 
 
-img_string = ascii_generator()
-final_image = "\n".join(img_string[i:(i + (new_width * 2))] for i in range(0, len(img_string), new_width * 2))
+img_string = ascii_generator(test_img)
+final_image = "\n".join(img_string[i:(i + (WIDTH * 2))] for i in range(0, len(img_string), WIDTH * 2))
 
 with open("ascii_prime.txt", "w") as f:
     f.write(final_image)

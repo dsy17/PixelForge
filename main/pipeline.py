@@ -1,4 +1,4 @@
+from PIL import Image
+from main.paths import RESOURCES
 
-class Pipeline:
-    def __init__(self):
-        pass
+test_img = Image.open(RESOURCES / "image.png")
