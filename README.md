@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="1752" height="200" alt="pixelforge_full" src="https://github.com/user-attachments/assets/e86c7a11-8815-4b29-b861-828d426ce531" />
+  <img width="1752" height="200" alt="pixelforge_full" src="https://github.com/user-attachments/assets/52c7cf77-24c5-4d82-95df-c946b765b3a3" />
 </p>
 
 # PixelForge
