@@ -3,6 +3,7 @@
 
 # JetBrains / PyCharm
 .idea/
+sandbox/
 
 # Python
 __pycache__/
