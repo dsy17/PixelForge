@@ -17,6 +17,8 @@ def build_pipeline(args: argparse.Namespace) -> Pipeline:
         effects.append(image_ascii(width=args.ascii_width))
     return Pipeline(effects)
 
+""" Create arg for listing available palettes (eg. --palette gameboy)"""
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="PixelForge — image effects pipeline")
