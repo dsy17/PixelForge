@@ -53,7 +53,7 @@ def ascii_to_image(text, font_size=12, fg="white", bg="black"):
 
 if __name__ == "__main__":
     img_string = ascii_generator(test_img)
-    final_image = "\n".join(img_string[i:(i + (WIDTH))] for i in range(0, len(img_string), WIDTH))
+    final_image = "\n".join(img_string[i:(i + WIDTH)] for i in range(0, len(img_string), WIDTH))
 
     with open("ascii_prime.txt", "w") as f:
         f.write(final_image)
