@@ -1,7 +1,8 @@
 from main.paths import RESOURCES
+from main.pipeline import test_img
 from PIL import Image
 
-test_img = Image.open(RESOURCES / "image.png").convert("L").resize(size=(200,200))
+test_img = test_img.convert("L").resize(size=(200,200))
 
 BAYER_4 = [
     [0, 8, 2, 10],

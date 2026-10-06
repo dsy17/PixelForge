@@ -1,8 +1,9 @@
 from PIL import Image, ImageOps
-from main.paths import RESOURCES
+from main.paths import RESOURCES, PALETTES
+from main.pipeline import test_img
 import numpy as np
 
-test_img = Image.open(RESOURCES / "image.png").convert("RGB")
+test_img = test_img.convert("RGB")
 small = test_img.copy()
 small.thumbnail((128, 128), Image.Resampling.NEAREST)
 PALETTE_NUM = 16
@@ -74,8 +75,13 @@ def mapping(palette, img):
 
     return result
 
+def load_palette(name):
+    lines = (PALETTES / f"{name}.hex").read_text().splitlines()
+    return [tuple(int(h[i:i+2], 16) for i in (0, 2, 4)) for h in lines]
 
-pal = build_palette(box_split(img_data))
-im = mapping(pal, test_img)
-im.show()
+
+if __name__ == "__main__":
+    pal = build_palette(box_split(img_data))
+    im = mapping(pal, test_img)
+    im.show()
 

@@ -12,7 +12,7 @@ ascii_char = CHAR["classic"]
 
 def resize_image(img):
     new_height = int((img.size[0] / img.size[1]) * WIDTH)
-    new_image = img.resize((WIDTH, new_height))
+    new_image = img.resize((WIDTH, new_height), Image.Resampling.NEAREST)
 
     return new_image
 
