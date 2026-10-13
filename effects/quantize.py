@@ -1,14 +1,16 @@
 from PIL import Image, ImageOps
 from main.paths import RESOURCES, PALETTES
-from main.pipeline import test_img
+from main.pipeline import Effect
 import numpy as np
 
-test_img = test_img.convert("RGB")
-small = test_img.copy()
-small.thumbnail((128, 128), Image.Resampling.NEAREST)
 PALETTE_NUM = 16
 
-img_data = list(small.get_flattened_data())
+
+def create_thumbnail(img):
+    small = img.copy()
+    small.thumbnail((128, 128), Image.Resampling.NEAREST)
+
+    return list(small.get_flattened_data())
 
 
 def widest_range(box):
@@ -80,8 +82,21 @@ def load_palette(name):
     return [tuple(int(h[i:i+2], 16) for i in (0, 2, 4)) for h in lines]
 
 
+class Quantize(Effect):
+
+    def __init__(self, palette_num: int = PALETTE_NUM):
+        self.palette_num = palette_num
+
+
+    def apply(self, img):
+        thumb = create_thumbnail(img)
+        palette = build_palette(box_split(thumb, self.palette_num))
+        result = mapping(palette, img)
+        return result.convert("RGB")  # hand RGB to the next effect
+
+
 if __name__ == "__main__":
-    pal = build_palette(box_split(img_data))
-    im = mapping(pal, test_img)
-    im.show()
+    test_img = Image.open(RESOURCES / "image.png").convert("RGB")
+    Quantize().apply(test_img).show()
+
 
