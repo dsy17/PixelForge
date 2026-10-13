@@ -54,9 +54,9 @@ def find_intervals(row: list, lower, upper) -> list:
 
 
 class PixelSort(Effect):
-
     """Pixel sorting: sorts runs of pixels in each row by bright
     ness, leaving the darkest and brightest untouched."""
+
     def __init__(self, lower: int = LOWER, upper: int = UPPER, reverse: bool = False):
         self.lower = lower
         self.upper = upper

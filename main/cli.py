@@ -1,23 +1,24 @@
 import argparse
 from main.image_io import load_image, save_image
 from main.pipeline import Pipeline
-from effects.quantize import image_quantise
-from effects.dither import image_dither
-from effects.ascii_art import image_ascii
+from effects.quantize import Quantize
+from effects.dither import Dither
+from effects.ascii import Ascii
+from effects.pixelsort import PixelSort
 
 
 def build_pipeline(args: argparse.Namespace) -> Pipeline:
     """Translates parsed CLI flags into a list of Effect instances."""
     effects = []
     if args.quantize:
-        effects.append(image_quantise(colors=args.colors))
+        effects.append(Quantize(palette_num=args.colors))
     if args.dither:
-        effects.append(image_dither(method="floyd-steinberg"))
+        effects.append(Dither())
     if args.ascii:
-        effects.append(image_ascii(width=args.ascii_width))
+        effects.append(Ascii(width=args.ascii_width))
+    if args.pixelsort:
+        effects.append(PixelSort())
     return Pipeline(effects)
-
-""" Create arg for listing available palettes (eg. --palette gameboy)"""
 
 
 def main() -> None:
@@ -25,10 +26,14 @@ def main() -> None:
     parser.add_argument("input", help="Path to the input image")
     parser.add_argument("output", help="Path to save the processed image")
     parser.add_argument("--quantize", action="store_true")
-    parser.add_argument("--colors", type=int, default=8)
+    parser.add_argument("--colors", type=int, default=16)
     parser.add_argument("--dither", action="store_true")
     parser.add_argument("--ascii", action="store_true")
     parser.add_argument("--ascii-width", type=int, default=100)
+    parser.add_argument("--pixelsort", action="store_true")
+    parser.add_argument("--lower", type=int, default=40)
+    parser.add_argument("--upper", type=int, default=235)
+
 
     args = parser.parse_args()
 

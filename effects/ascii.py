@@ -11,7 +11,7 @@ ascii_char = CHAR["classic"]
 
 
 def resize_image(img, width):
-    new_height = int((img.size[0] / img.size[1]) * width)
+    new_height = int((img.size[1] / img.size[0]) * width)
     new_image = img.resize((width, new_height), Image.Resampling.NEAREST)
 
     return new_image
@@ -63,11 +63,11 @@ class Ascii(Effect):
         self.width = width
 
     def apply(self, image: Image.Image) -> Image.Image:
-        result = ascii_to_image(ascii_generator(test_img, self.width), self.width)
+        result = ascii_to_image(ascii_generator(image, self.width), self.width)
         return result.convert("RGB")
 
 
 
 if __name__ == "__main__":
-    test_img = Image.open(RESOURCES / "image.png")
+    test_img = Image.open(RESOURCES / "image.png").convert("RGB")
     Ascii().apply(test_img).show()

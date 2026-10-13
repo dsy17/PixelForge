@@ -17,8 +17,6 @@ PS1_DITHER = [
     [3, -1, 2, -2],
 ]
 
-
-
 n = len(BAYER_4)  # 4
 levels = n * n  # 16 cells, so 16 thresholds
 step = 256 // levels  # 16 brightness values per threshold

@@ -1,4 +1,4 @@
-from PIL import Image, ImageOps
+from PIL import Image
 from main.paths import RESOURCES, PALETTES
 from main.pipeline import Effect
 import numpy as np
@@ -83,12 +83,13 @@ def load_palette(name):
 
 
 class Quantize(Effect):
+    """ Quantize: limits an image's colour palette via a median cut algorithm. """
 
     def __init__(self, palette_num: int = PALETTE_NUM):
         self.palette_num = palette_num
 
 
-    def apply(self, img):
+    def apply(self, img: Image.Image) -> Image.Image:
         thumb = create_thumbnail(img)
         palette = build_palette(box_split(thumb, self.palette_num))
         result = mapping(palette, img)
