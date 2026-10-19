@@ -9,6 +9,20 @@ CHAR = {
 }
 ascii_char = CHAR["classic"]
 
+# Monospace fonts to try, one per OS: Windows, macOS, Linux
+FONTS = ["consola.ttf", "Menlo.ttc", "DejaVuSansMono.ttf"]
+
+
+def load_font(size):
+    """ Returns the first monospace font found on this system, or Pillow's built-in font."""
+    for name in FONTS:
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:  # font isn't installed here, try the next one
+            continue
+
+    return ImageFont.load_default(size)
+
 
 def resize_image(img, width):
     new_height = int((img.size[1] / img.size[0]) * width)
@@ -41,7 +55,7 @@ def ascii_generator(img, width):
 def ascii_to_image(tx, width, font_size=12, fg="white", bg="black"):
     text = text_to_str(tx, width)
     lines = text.splitlines()
-    font = ImageFont.truetype("consola.ttf", font_size)
+    font = load_font(font_size)
 
     # size of one character cell
     left, top, right, bottom = font.getbbox("@")
