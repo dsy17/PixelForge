@@ -1,10 +1,11 @@
 import argparse
-from pixelforge.image_io import load_image, save_image
+import sys
+from pixelforge.image_io import ImageIOError, load_image, save_image
 from pixelforge.pipeline import Pipeline
 from pixelforge.effects.quantize import Quantize, available_palettes
 from pixelforge.effects.dither import Dither
 from pixelforge.effects.ascii import Ascii
-from pixelforge.effects.pixelsort import PixelSort
+from pixelforge.effects.pixelsort import PixelSort, LOWER, UPPER
 
 
 def build_pipeline(args: argparse.Namespace) -> Pipeline:
@@ -17,7 +18,7 @@ def build_pipeline(args: argparse.Namespace) -> Pipeline:
     if args.ascii:
         effects.append(Ascii(width=args.ascii_width))
     if args.pixelsort:
-        effects.append(PixelSort())
+        effects.append(PixelSort(lower=args.lower, upper=args.upper, reverse=args.reverse))
     return Pipeline(effects)
 
 
@@ -33,16 +34,20 @@ def main() -> None:
     parser.add_argument("--ascii", action="store_true")
     parser.add_argument("--ascii-width", type=int, default=100)
     parser.add_argument("--pixelsort", action="store_true")
-    parser.add_argument("--lower", type=int, default=40)
-    parser.add_argument("--upper", type=int, default=235)
+    parser.add_argument("--lower", type=int, default=LOWER)
+    parser.add_argument("--upper", type=int, default=UPPER)
+    parser.add_argument("--reverse", action="store_true")
 
 
     args = parser.parse_args()
 
-    image = load_image(args.input)
-    pipeline = build_pipeline(args)
-    result = pipeline.run(image)
-    save_image(result, args.output)
+    try:
+        image = load_image(args.input)
+        pipeline = build_pipeline(args)
+        result = pipeline.run(image)
+        save_image(result, args.output)
+    except ImageIOError as error:
+        sys.exit(f"pixelforge: error: {error}")  # prints to stderr and exits with code 1
 
 
 if __name__ == "__main__":

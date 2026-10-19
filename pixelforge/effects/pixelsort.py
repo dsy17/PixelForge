@@ -20,7 +20,7 @@ def pixel_sort(img, lower: int = LOWER, upper: int = UPPER, reverse: bool = REVE
 
     for row in rows:
         for start, end in find_intervals(row, lower, upper):
-            row[start:end] = sorted(row[start:end], key=luma, reverse=REVERSE)
+            row[start:end] = sorted(row[start:end], key=luma, reverse=reverse)
 
     result = Image.new("RGB", img.size)
     result.putdata([p for row in rows for p in row])
