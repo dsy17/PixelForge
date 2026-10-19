@@ -77,21 +77,31 @@ def mapping(palette, img):
 
     return result
 
+def available_palettes():
+    """Returns the names of the fixed palettes, i.e. the .hex filenames without the extension."""
+    return sorted(path.stem for path in PALETTES.glob("*.hex"))
+
+
 def load_palette(name):
     lines = (PALETTES / f"{name}.hex").read_text().splitlines()
-    return [tuple(int(h[i:i+2], 16) for i in (0, 2, 4)) for h in lines]
+    return [tuple(int(h[i:i+2], 16) for i in (0, 2, 4)) for h in lines if h.strip()]
 
 
 class Quantize(Effect):
-    """ Quantize: limits an image's colour palette via a median cut algorithm. """
+    """ Quantize: limits an image's colour palette, either to a fixed palette
+    or to one generated from the image via a median cut algorithm. """
 
-    def __init__(self, palette_num: int = PALETTE_NUM):
+    def __init__(self, palette_num: int = PALETTE_NUM, palette: str | None = None):
         self.palette_num = palette_num
+        self.palette = palette  # name of a fixed palette; None generates one instead
 
 
     def apply(self, img: Image.Image) -> Image.Image:
-        thumb = create_thumbnail(img)
-        palette = build_palette(box_split(thumb, self.palette_num))
+        if self.palette:
+            palette = load_palette(self.palette)
+        else:
+            thumb = create_thumbnail(img)
+            palette = build_palette(box_split(thumb, self.palette_num))
         result = mapping(palette, img)
         return result.convert("RGB")  # hand RGB to the next effect
 

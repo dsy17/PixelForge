@@ -1,7 +1,7 @@
 import argparse
 from pixelforge.image_io import load_image, save_image
 from pixelforge.pipeline import Pipeline
-from pixelforge.effects.quantize import Quantize
+from pixelforge.effects.quantize import Quantize, available_palettes
 from pixelforge.effects.dither import Dither
 from pixelforge.effects.ascii import Ascii
 from pixelforge.effects.pixelsort import PixelSort
@@ -10,8 +10,8 @@ from pixelforge.effects.pixelsort import PixelSort
 def build_pipeline(args: argparse.Namespace) -> Pipeline:
     """Translates parsed CLI flags into a list of Effect instances."""
     effects = []
-    if args.quantize:
-        effects.append(Quantize(palette_num=args.colors))
+    if args.quantize or args.palette:  # choosing a palette implies quantizing
+        effects.append(Quantize(palette_num=args.colors, palette=args.palette))
     if args.dither:
         effects.append(Dither())
     if args.ascii:
@@ -27,6 +27,8 @@ def main() -> None:
     parser.add_argument("output", help="Path to save the processed image")
     parser.add_argument("--quantize", action="store_true")
     parser.add_argument("--colors", type=int, default=16)
+    parser.add_argument("--palette", choices=available_palettes(),
+                        help="quantize to a fixed palette instead of generating one")
     parser.add_argument("--dither", action="store_true")
     parser.add_argument("--ascii", action="store_true")
     parser.add_argument("--ascii-width", type=int, default=100)
