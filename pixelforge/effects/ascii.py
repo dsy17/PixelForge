@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps, ImageDraw, ImageFont
-from main.paths import RESOURCES
-from main.pipeline import Effect
+from pixelforge.paths import RESOURCES
+from pixelforge.pipeline import Effect
 
 WIDTH = 100
 CHAR = {

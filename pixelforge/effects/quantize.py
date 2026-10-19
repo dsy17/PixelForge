@@ -1,6 +1,6 @@
 from PIL import Image
-from main.paths import RESOURCES, PALETTES
-from main.pipeline import Effect
+from pixelforge.paths import RESOURCES, PALETTES
+from pixelforge.pipeline import Effect
 import numpy as np
 
 PALETTE_NUM = 16

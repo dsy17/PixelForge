@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pixelforge"
+version = "0.1.0"
+description = "A modular Python image-processing pipeline using a chainable effects architecture."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pillow>=12.1",
+    "numpy>=1.24",
+]
+
+[project.scripts]
+pixelforge = "pixelforge.cli:main"
+
+[tool.setuptools]
+packages = ["pixelforge", "pixelforge.effects"]
+
+[tool.setuptools.package-data]
+pixelforge = ["palettes/*.hex"]

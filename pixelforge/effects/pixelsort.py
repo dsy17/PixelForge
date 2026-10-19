@@ -1,5 +1,5 @@
-from main.paths import RESOURCES
-from main.pipeline import Effect
+from pixelforge.paths import RESOURCES
+from pixelforge.pipeline import Effect
 from PIL import Image
 
 # Unused settings for future features implementing masks

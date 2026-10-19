@@ -1,10 +1,10 @@
 import argparse
-from main.image_io import load_image, save_image
-from main.pipeline import Pipeline
-from effects.quantize import Quantize
-from effects.dither import Dither
-from effects.ascii import Ascii
-from effects.pixelsort import PixelSort
+from pixelforge.image_io import load_image, save_image
+from pixelforge.pipeline import Pipeline
+from pixelforge.effects.quantize import Quantize
+from pixelforge.effects.dither import Dither
+from pixelforge.effects.ascii import Ascii
+from pixelforge.effects.pixelsort import PixelSort
 
 
 def build_pipeline(args: argparse.Namespace) -> Pipeline:
@@ -22,7 +22,7 @@ def build_pipeline(args: argparse.Namespace) -> Pipeline:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="PixelForge — image effects pipeline")
+    parser = argparse.ArgumentParser(prog="pixelforge", description="PixelForge — image effects pipeline")
     parser.add_argument("input", help="Path to the input image")
     parser.add_argument("output", help="Path to save the processed image")
     parser.add_argument("--quantize", action="store_true")
