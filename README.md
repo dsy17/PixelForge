@@ -184,6 +184,10 @@ PixelForge/
 
 `pixelforge/effects/quantize.py`
 
+<p align="center">
+  <img width="200" alt="Example of colour quantisation (8 colours) with median cut" src="resources/quantise.png"/>
+</p>
+
 Quantisation reduces an image to a small palette of colours in two steps: **choose the palette**, then **map every pixel to its nearest palette colour**.
 
 **1. Choosing the palette with median cut**
@@ -215,6 +219,10 @@ This is computed with NumPy across the whole palette at once. Results are cached
 
 `pixelforge/palettes/*.hex`, loaded by `load_palette()` in `pixelforge/effects/quantize.py`
 
+<p align="center">
+  <img width="200" alt="Example of quantising with fixed palette (pico-8)" src="resources/pico.png"/>
+</p>
+
 Instead of generating a palette, an image can be mapped onto a classic fixed palette with `--palette NAME`, thus skipping the need for median cut. Palettes are retreived from [Lospec](https://lospec.com/palette-list).
 
 Palettes are stored as plain `.hex` files. This is the format Lospec exports, so new palettes can be downloaded from here and dropped into `pixelforge/palettes/`. The CLI finds them automatically and lists them in `--help`.
@@ -237,6 +245,10 @@ Palettes with a wide range of colours (PICO-8, Sweetie 16, DawnBringer 16) work 
 
 `pixelforge/effects/dither.py`
 
+<p align="center">
+  <img width="200" alt="Example of ordered dithering" src="resources/dither.png"/>
+</p>
+
 Dithering simulates more tones than are actually available by arranging pixels in patterns. PixelForge uses **ordered dithering** with a 4×4 Bayer matrix:
 
 ```
@@ -252,6 +264,10 @@ The matrix is scaled to 16 brightness thresholds across 0–255 and tiled across
 
 `pixelforge/effects/pixelsort.py`
 
+<p align="center">
+  <img width="200" alt="Example of pixel sorting" src="resources/pixelsort.png"/>
+</p>
+
 Pixel sorting is a glitch-art effect that rearranges pixels into smooth streaks.
 
 1. For each row, `find_intervals` finds runs of consecutive pixels whose brightness falls between `--lower` and `--upper` (40–235 by default).
@@ -261,6 +277,10 @@ Pixel sorting is a glitch-art effect that rearranges pixels into smooth streaks.
 ### ASCII art
 
 `pixelforge/effects/ascii.py`
+
+<p align="center">
+  <img width="200" alt="Example of ASCII art" src="resources/ascii.png"/>
+</p>
 
 1. The image is resized to `--ascii-width` characters across and converted to greyscale.
 2. Each pixel's brightness is mapped to a character from a **density ramp**, a string ordered by character density. The index is scaled to the string's length, so any lengths work.
