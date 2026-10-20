@@ -1,5 +1,6 @@
 import argparse
 import sys
+from pathlib import Path
 from pixelforge.image_io import ImageIOError, load_image, save_image
 from pixelforge.pipeline import Effect, Pipeline
 from pixelforge.effects.quantize import Quantize, available_palettes
@@ -60,11 +61,15 @@ def main() -> None:
     parser.add_argument("--lower", type=int, default=LOWER)
     parser.add_argument("--upper", type=int, default=UPPER)
     parser.add_argument("--reverse", action="store_true")
+    parser.add_argument("--overwrite", action="store_true",
+                        help="replace the output file if it already exists")
 
 
     args = parser.parse_args()
     if not args.effects:
         parser.error("choose at least one effect, e.g. --dither")
+    if Path(args.output).exists() and not args.overwrite:
+        sys.exit(f"pixelforge: error: {args.output} already exists (use --overwrite to replace it)")
 
     try:
         image = load_image(args.input)
