@@ -4,7 +4,7 @@ from pixelforge.pipeline import Effect
 
 WIDTH = 100
 CHAR = {
-    "classic": "'@!$%^&,/>=?+#|:. ",
+    "classic": "@!$%^&,/>=?+#|:. ",
     "detailed": "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'. ",
 }
 ascii_char = CHAR["classic"]

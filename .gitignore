@@ -4,7 +4,6 @@
 # JetBrains / PyCharm
 .idea/
 sandbox/
-resources/
 
 # Python
 __pycache__/

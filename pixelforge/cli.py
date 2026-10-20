@@ -38,7 +38,8 @@ def build_pipeline(args: argparse.Namespace) -> Pipeline:
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="pixelforge",
-        description="PixelForge — image effects pipeline. Effects run in the order you type them.",
+        description="\nImage effects pipeline. Effects run in the order you type them.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,  # keeps the banner's line breaks
     )
     parser.add_argument("input", help="Path to the input image")
     parser.add_argument("output", help="Path to save the processed image")
@@ -63,7 +64,16 @@ def main() -> None:
     parser.add_argument("--reverse", action="store_true")
     parser.add_argument("--overwrite", action="store_true",
                         help="replace the output file if it already exists")
+    parser.add_argument("--show", action="store_true",
+                        help="show the image after processing")
 
+
+    # Run with nothing after it: introduce the tool instead of showing an error
+    if len(sys.argv) == 1:
+        parser.print_usage()
+        print("\nExample: pixelforge photo.png out.png --palette pico-8 --dither")
+        print("Run 'pixelforge --help' for all options.")
+        return
 
     args = parser.parse_args()
     if not args.effects:
@@ -78,6 +88,8 @@ def main() -> None:
         save_image(result, args.output)
     except ImageIOError as error:
         sys.exit(f"pixelforge: error: {error}")  # prints to stderr and exits with code 1
+
+    print(f"Saved {args.output}")
 
 
 if __name__ == "__main__":
