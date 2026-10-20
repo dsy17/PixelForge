@@ -290,3 +290,4 @@ Two ramps are included: `classic` (short and bold) and `detailed` (about 70 char
 - [ ] Coloured ASCII output, using each pixel's original colour
 - [ ] k-means refinement for quantisation
 - [ ] Faster processing with NumPy vectorisation
+- [ ] Customisable chain as presets
