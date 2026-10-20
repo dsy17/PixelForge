@@ -14,6 +14,11 @@ PixelForge is built as a **pipeline of effects**:
 input image ──▶ effect ──▶ effect ──▶ … ──▶ output image
 ```
 
+<table align="center">
+  <tr><td><img width="200" src="resources/image.png"></td><td>→</td><td><img width="200" src="resources/dither.png"></td><td>→</td><td><img width="200" src="resources/chain.png"></td></tr>
+  <tr><td align="center"><code>photo.png</code></td><td></td><td align="center"><code>--dither</code></td><td></td><td align="center"><code>--palette gameboy</code></td></tr>
+</table>
+
 Every effect is a subclass of `Effect` (`pixelforge/pipeline.py`). `Pipeline` holds a list of effects and runs them in order, passing each one's output to the next.
 
 
@@ -115,6 +120,7 @@ pixelforge photo.png out.png --pixelsort --lower 80 --upper 200 --reverse
 # ASCII art, 120 characters wide
 pixelforge photo.png out.png --ascii --ascii-width 120
 ```
+
 
 The output format is chosen from the output file's extension (`.png`, `.jpg`, `.bmp`, …). PixelForge won't replace an existing file unless you add `--overwrite`. Run `pixelforge --help` for the full list of options.
 
