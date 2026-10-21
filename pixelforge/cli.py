@@ -38,8 +38,7 @@ def build_pipeline(args: argparse.Namespace) -> Pipeline:
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="pixelforge",
-        description="\nImage effects pipeline. Effects run in the order you type them.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,  # keeps the banner's line breaks
+        description="Image effects pipeline. Effects run in the order you type them.",
     )
     parser.add_argument("input", help="Path to the input image")
     parser.add_argument("output", help="Path to save the processed image")
